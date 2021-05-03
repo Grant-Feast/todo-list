@@ -39,9 +39,22 @@ const deleteTask = (id) => {
   setTasks(tasks.filter((task) => task.id !== id))
 }
 
-// Toggle Reminder
+// Toggle Complete
 const toggleCompleted = (id) => {
   setTasks(tasks.map((task) => task.id === id ? {...task, completed: !task.completed} : task))
+}
+
+// Chnage status of task
+const updateStatus = (id, newStatus) => {
+  let allTasks = tasks;
+  allTasks = allTasks.map(task => {
+    if(task.id === id) {
+      console.log('In here')
+      task.completed = newStatus;
+    }
+  return task
+  })
+  setTasks(allTasks)
 }
 
   return (
@@ -49,7 +62,7 @@ const toggleCompleted = (id) => {
       <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
       {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask}  onToggle={toggleCompleted} /> : 'No ToDos Listed'}
-      {<CompletedTasks />}
+      {tasks.length > 0 ? <CompletedTasks tasks={tasks} setTasks={setTasks} updateStatus={updateStatus} /> : 'No Tasks Have Been Completed'}
     </div>
   );
 }

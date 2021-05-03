@@ -1,6 +1,6 @@
 const CompletedTasks = () => {
   return (
-    <div>
+    <div className='completed'>
       <h2>Completed Tasks</h2>
     </div>
   )
