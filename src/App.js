@@ -34,6 +34,19 @@ const addTask = (task) => {
   setTasks([...tasks, newTask])
 }
 
+// Update the status of the task 
+const updateStatus=(id, newStatus) => {
+  let allTasks = tasks;
+  allTasks = allTasks.map(task => {
+      if(task.id === id) {
+          console.log('in here')
+          task.completed = newStatus;
+      }
+  return task
+  })
+  setTasks(allTasks)
+}
+
 // Delete Task
 const deleteTask = (id) => {
   setTasks(tasks.filter((task) => task.id !== id))
@@ -48,7 +61,8 @@ const toggleCompleted = (id) => {
     <div className="container">
       <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
       {showAddTask && <AddTask onAdd={addTask} />}
-      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask}  onToggle={toggleCompleted} /> : 'No ToDos Listed'}
+      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask}  onToggle={toggleCompleted} updateStatus={updateStatus} /> : 'No ToDos Listed'}
+      {tasks.length > 0 ? <CompletedTasks tasks={tasks} onDelete={deleteTask} onToggle={toggleCompleted} updateStatus={updateStatus} /> : 'No Tasks Have Been Completed Yet'}
     </div>
   );
 }
